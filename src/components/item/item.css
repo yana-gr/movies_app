@@ -1,0 +1,36 @@
+.film-about {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 12px;
+}
+
+.film-picture {
+  height: 100%;
+  width: auto;
+}
+.film-genres {
+  margin: 0;
+  padding: 5px 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.film-description {
+  line-height: 22px;
+}
+
+.film-name {
+  display: block;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.8em;
+}
+
+h5:where(.css-dev-only-do-not-override-1jr9qlj).ant-typography {
+  line-height: 1.2;
+}
+
+.spinner {
+  position: relative;
+  top: 8rem;
+  left: 13rem;
+}
