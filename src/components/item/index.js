@@ -1,16 +1,15 @@
-import React, { Component } from "react";
-import { Typography, Space, Spin } from "antd";
+import React, { Component } from 'react'
+import { Typography, Space, Spin } from 'antd'
 
-import "./item.css";
+import './item.css'
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 export default class Item extends Component {
   render() {
-    const { title, dateFilm, genreFilm, aboutFilm, posterFilmUrl, loading } =
-      this.props;
+    const { title, dateFilm, genreFilm, aboutFilm, posterFilmUrl, loading } = this.props
 
-    const genre = genreFilm.map((element) => <Text keyboard> {element}</Text>);
+    const genre = genreFilm.map((element) => <Text keyboard> {element}</Text>)
 
     if (loading) {
       return (
@@ -19,7 +18,7 @@ export default class Item extends Component {
             <Spin className="spinner" />
           </Space>
         </div>
-      );
+      )
     }
 
     return (
@@ -36,6 +35,6 @@ export default class Item extends Component {
           <Text className="film-description">{aboutFilm}</Text>
         </div>
       </>
-    );
+    )
   }
 }

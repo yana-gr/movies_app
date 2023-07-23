@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Space, Alert } from "antd";
+import React, { Component } from 'react'
+import { Space, Alert } from 'antd'
 
-import HeaderButtons from "../header-buttons";
-import SearchForm from "../search-form";
-import ItemList from "../item-list";
+import HeaderButtons from '../header-buttons'
+import SearchForm from '../search-form'
+import ItemList from '../item-list'
 // import Footer from '../footer'
-import MovieService from "../../services/movie-service";
-import "./app.css";
+import MovieService from '../../services/movie-service'
+import './app.css'
 
 export default class App extends Component {
-  movieService = new MovieService();
+  movieService = new MovieService()
 
   state = {
     filmData: [],
@@ -36,42 +36,36 @@ export default class App extends Component {
     //     posterFilmUrl: `https://image.tmdb.org/t/p/w185/b52nqFj5XrBNA7MhqcnENvFsHtx.jpg`,
     //   },
     // ],
-  };
+  }
 
   componentDidMount() {
-    this.newArrFilms();
+    this.newArrFilms()
   }
 
   newArrFilms() {
     this.movieService
       .getAllMovies()
       .then((filmData) => {
-        this.setState({ filmData, loading: false });
+        this.setState({ filmData, loading: false })
       })
-      .catch(this.onError);
+      .catch(this.onError)
   }
 
   onError = () => {
-    this.setState({ error: true, loading: false });
-  };
+    this.setState({ error: true, loading: false })
+  }
 
   render() {
-    const { filmData, loading, error } = this.state;
+    const { filmData, loading, error } = this.state
 
     if (error) {
       return (
         <section className="main">
           <Space>
-            <Alert
-              className="alert"
-              message="Error"
-              description="Something goes wrong..."
-              type="error"
-              showIcon
-            />
+            <Alert className="alert" message="Error" description="Something goes wrong..." type="error" showIcon />
           </Space>
         </section>
-      );
+      )
     }
 
     return (
@@ -82,6 +76,6 @@ export default class App extends Component {
         </section>
         <ItemList films={filmData} loading={loading} />
       </section>
-    );
+    )
   }
 }

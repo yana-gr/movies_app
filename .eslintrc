@@ -34,7 +34,7 @@
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "always"],
+    "semi": ["error", "never"],
     "no-param-reassign": "error",
     "react/prefer-stateless-function": "off",
     "react/destructuring-assignment": "off",
