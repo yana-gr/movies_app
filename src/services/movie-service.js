@@ -9,16 +9,30 @@ export default class MovieService {
     return res.json()
   }
 
-  async getAllMovies() {
+  // async getAllMovies() {
+  //   const res = await this.getResource(
+  //     'https://api.themoviedb.org/3/search/movie?query=me&api_key=d73a32038f6ba677e9bf01e5a9cd7c16'
+  //   )
+  //   return res.results.map(this._transformMovie)
+  // }
+
+  async getSearchMovies(page, title) {
     const res = await this.getResource(
-      'https://api.themoviedb.org/3/search/movie?query=get&api_key=d73a32038f6ba677e9bf01e5a9cd7c16'
+      `https://api.themoviedb.org/3/search/movie?query=${title}&page=${page}&api_key=d73a32038f6ba677e9bf01e5a9cd7c16`
     )
     return res.results.map(this._transformMovie)
   }
 
+  async getTotalPages(page, title) {
+    const res = await this.getResource(
+      `https://api.themoviedb.org/3/search/movie?query=${title}&page=${page}&api_key=d73a32038f6ba677e9bf01e5a9cd7c16`
+    )
+    return res.total_pages
+  }
+
   getMovie(id) {
     return this.getResource(
-      `https://api.themoviedb.org/3/movie/${id}?query=get&api_key=d73a32038f6ba677e9bf01e5a9cd7c16`
+      `https://api.themoviedb.org/3/movie/${id}?query=ii&api_key=d73a32038f6ba677e9bf01e5a9cd7c16`
     )
   }
 

@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 0;
   background: #f7f7f7;
-  overflow-y: scroll;
 }
 
 /* button {
@@ -51,12 +50,15 @@ body {
   background: #fff;
   width: 72%;
   min-width: 1000px;
-  height: 100vh;
-  justify-content: space-between;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
 .alert {
   position: relative;
   top: 50vh;
+}
+
+.pages {
+  margin-bottom: 20px;
 }

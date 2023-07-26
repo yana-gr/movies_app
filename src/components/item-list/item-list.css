@@ -11,7 +11,7 @@
 
 .film {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-shrink: 0;
   width: 454px;
   height: 281px;
