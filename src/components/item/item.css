@@ -17,6 +17,7 @@
 }
 
 .film-description {
+  display: block;
   line-height: 22px;
 }
 

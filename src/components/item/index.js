@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Typography, Space, Spin } from 'antd'
+import { Typography, Space, Spin, Rate } from 'antd'
 
 import './item.css'
 
@@ -33,6 +33,7 @@ export default class Item extends Component {
           </Text>
           <ul className="film-genres">{genre}</ul>
           <Text className="film-description">{aboutFilm}</Text>
+          <Rate className="film-rating" allowHalf defaultValue={0} />
         </div>
       </>
     )
