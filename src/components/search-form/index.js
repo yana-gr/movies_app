@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Space } from 'antd'
+import { Input, Space, Modal } from 'antd'
 import { debounce } from 'lodash'
 import { SearchOutlined } from '@ant-design/icons'
 
@@ -22,6 +22,24 @@ export default class SearchForm extends Component {
   }
 
   render() {
+    const { isModalOpen, handleOk } = this.props
+
+    if (isModalOpen === true) {
+      return (
+        <section className="main">
+          <Modal
+            title="Try again"
+            open={isModalOpen}
+            onOk={handleOk}
+            closeIcon={false}
+            cancelButtonProps={{ style: { display: 'none' } }}
+          >
+            <p>There are no movies. Enter another movie title</p>
+          </Modal>
+        </section>
+      )
+    }
+
     return (
       <Space.Compact className="search-form">
         <Input

@@ -36,3 +36,20 @@ h5:where(.css-dev-only-do-not-override-1jr9qlj).ant-typography {
   top: 8rem;
   left: 13rem;
 }
+
+.film-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  padding-top: 5px;
+  width: 228px;
+}
+.film-reting-circle {
+  margin-right: -10px;
+}
+
+.film-rating {
+  padding-top: 5px;
+  font-size: 15px;
+}
