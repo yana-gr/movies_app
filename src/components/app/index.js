@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Tabs, Space, Alert } from 'antd'
-import { Offline, Online } from 'react-detect-offline'
-// import { Space, Alert } from 'antd'
 
 import SearchPage from '../search-page'
 import RatedPage from '../rated-page'
@@ -23,6 +21,8 @@ export default class App extends Component {
     genres: [],
     ratedFilms: [],
     totelPagesRatedFilms: 0,
+    currentSearchPage: 1,
+    currentRatedPage: 1,
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ export default class App extends Component {
 
   onChangePage = (e) => {
     if (this.state.filmTitleSearch !== '') {
-      this.setState({ loading: true })
+      this.setState({ loading: true, currentSearchPage: e })
       this.movieService
         .getSearchMovies(e, this.state.filmTitleSearch)
         .then((filmData) => {
@@ -66,7 +66,7 @@ export default class App extends Component {
   }
 
   filmSearch = (title) => {
-    this.setState({ filmTitleSearch: title, loading: true })
+    this.setState({ filmTitleSearch: title, loading: true, currentSearchPage: 1 })
 
     this.movieService
       .getTotalPages(1, title)
@@ -143,7 +143,7 @@ export default class App extends Component {
     this.movieService
       .getMovieRating(this.state.guestSessionID, e)
       .then((ratedFilms) => {
-        this.setState({ ratedFilms, loading: false })
+        this.setState({ ratedFilms, loading: false, currentRatedPage: e })
       })
       .catch(this.onError)
     this.getMovieRated(e)
@@ -164,6 +164,8 @@ export default class App extends Component {
       guestSessionID,
       ratedFilms,
       totelPagesRatedFilms,
+      currentSearchPage,
+      currentRatedPage,
     } = this.state
     const totalNumberOfMovies = totalPages * 20
     const totalNumberOfRatedMovies = totelPagesRatedFilms * 20
@@ -183,6 +185,7 @@ export default class App extends Component {
             isModalOpen={isModalOpen}
             handleOk={this.handleOk}
             guestSessionID={guestSessionID}
+            currentSearchPage={currentSearchPage}
           />
         ),
       },
@@ -196,14 +199,30 @@ export default class App extends Component {
             guestSessionID={guestSessionID}
             ratedFilms={ratedFilms}
             totalNumberOfRatedMovies={totalNumberOfRatedMovies}
+            currentRatedPage={currentRatedPage}
           />
         ),
       },
     ]
-    // console.log(this.state.filmData)
-    // console.log(this.state.ratedFilms)
 
     // console.log(items.forEach((item) => console.log(item.key)))
+
+    if (navigator.onLine) {
+      return (
+        <MovieServiceContext.Provider value={genres}>
+          <Tabs className="main" defaultActiveKey="1" items={items} onChange={this.onChangeTabs} />
+        </MovieServiceContext.Provider>
+      )
+    }
+
+    if (navigator.onLine === false) {
+      return (
+        <Space className="main">
+          <Alert className="alert" message="No Internet connection" description="Try again later..." type="error" />
+        </Space>
+      )
+    }
+
     if (error) {
       return (
         <section className="main">
@@ -213,21 +232,5 @@ export default class App extends Component {
         </section>
       )
     }
-
-    return (
-      <MovieServiceContext.Provider value={genres}>
-        <section>
-          <Online>
-            <Tabs className="main" defaultActiveKey="1" items={items} onChange={this.onChangeTabs} />
-          </Online>
-
-          <Offline>
-            <Space className="main">
-              <Alert className="alert" message="No Internet connection" description="Try again later..." type="error" />
-            </Space>
-          </Offline>
-        </section>
-      </MovieServiceContext.Provider>
-    )
   }
 }

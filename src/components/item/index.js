@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Typography, Space, Spin, Rate, Progress } from 'antd'
 
-// import StarsRating from '../stars-rating'
 import { MovieServiceContext } from '../movie-service-context'
 import MovieService from '../../services/movie-service'
+
+import outOfPosterImg from './film_img_instead.png'
 
 import './item.css'
 
@@ -15,8 +16,9 @@ export default class Item extends Component {
   movieService = new MovieService()
 
   state = {
-    strokeColor: '#c0c0c0',
+    strokeColor: '',
     ratingValue: { id: '', value: 0 },
+    valueStars: '',
   }
 
   changeColor = (rating) => {
@@ -40,8 +42,10 @@ export default class Item extends Component {
 
   setMovieRating = (rate) => {
     const { guestSessionID, id } = this.props
+
     this.setState({
       ratingValue: { id, value: rate },
+      valueStars: rate,
     })
 
     // if (rate === 0) movieService.deleteRateMovie(id, guestSessionId)
@@ -49,17 +53,38 @@ export default class Item extends Component {
   }
 
   showMovieRating = () => {
-    const { ratingFilm, id } = this.props
-    if (ratingFilm !== '') {
-      this.setState({
-        ratingValue: { id, value: ratingFilm },
-      })
+    const { ratingFilm, averageRatingFilm, id } = this.props
+    this.setState({
+      ratingValue: { id, value: averageRatingFilm },
+    })
+
+    if (typeof ratingFilm !== 'undefined') {
+      this.setState({ valueStars: ratingFilm })
       this.changeColor(ratingFilm)
     }
+    this.changeColor(averageRatingFilm)
+
+    // if (typeof ratingFilm !== 'undefined') {
+    //   this.setState({
+    //     ratingValue: { id, value: ratingFilm },
+    //     valueStars: ratingFilm,
+    //   })
+    //   this.changeColor(ratingFilm)
+    // } else {
+    //   this.setState({
+    //     ratingValue: { id, value: averageRatingFilm },
+    //   })
+    //   this.changeColor(averageRatingFilm)
+    // }
+  }
+
+  imageOnError = (event) => {
+    // eslint-disable-next-line
+    event.currentTarget.src = outOfPosterImg
   }
 
   render() {
-    const { title, dateFilm, aboutFilm, posterFilmUrl, loading, genreFilm } = this.props
+    const { title, dateFilm, aboutFilm, loading, posterFilmUrl, genreFilm } = this.props
     const genres = this.context
 
     const genreNames = genreFilm.map((ID) => {
@@ -84,7 +109,7 @@ export default class Item extends Component {
 
     return (
       <>
-        <img className="film-picture" src={posterFilmUrl} alt="film" />
+        <img className="film-picture" src={posterFilmUrl} onError={this.imageOnError} alt="film" />
 
         <div className="film-about">
           <div className="film-header">
@@ -93,11 +118,11 @@ export default class Item extends Component {
             </Title>
             <Space wrap>
               <Progress
-                className="film-reting-circle"
+                className="film-rating-circle"
                 type="circle"
-                percent={100}
+                percent={this.state.ratingValue.value * 10}
                 size={34}
-                format={() => this.state.ratingValue.value}
+                format={(percent) => Number(`${percent / 10}`).toFixed(1)}
                 strokeColor={this.state.strokeColor}
                 strokeWidth={4}
               />
@@ -113,13 +138,12 @@ export default class Item extends Component {
             count={10}
             allowHalf
             defaultValue={0}
-            value={this.state.ratingValue.value}
+            value={this.state.valueStars}
             onChange={(rate) => {
               this.setMovieRating(rate)
               this.changeColor(rate)
             }}
           />
-          {/* <StarsRating /> */}
         </div>
       </>
     )

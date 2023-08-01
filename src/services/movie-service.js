@@ -75,11 +75,12 @@ export default class MovieService {
     genreFilm: item.genre_ids,
     aboutFilm: this.limitText(item.overview),
     posterFilmUrl: `https://image.tmdb.org/t/p/w185${item.poster_path}`,
+    averageRatingFilm: item.vote_average,
     ratingFilm: item.rating,
   })
 
   limitText(text) {
-    const size = 150
+    const size = 125
     if (text.length > size) {
       const shortText = text.slice(0, size)
       const indexOfLastGap = shortText.lastIndexOf(' ')

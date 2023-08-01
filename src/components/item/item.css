@@ -45,11 +45,18 @@ h5:where(.css-dev-only-do-not-override-1jr9qlj).ant-typography {
   padding-top: 5px;
   width: 228px;
 }
-.film-reting-circle {
+.film-rating-circle {
   margin-right: -10px;
 }
 
 .film-rating {
   padding-top: 5px;
   font-size: 15px;
+  margin-top: auto;
+}
+
+.error {
+  width: 100px;
+  height: 100px;
+  margin-top: 80px;
 }

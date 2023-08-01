@@ -7,8 +7,17 @@ import './search-page.css'
 
 export default class SearchPage extends Component {
   render() {
-    const { filmData, loading, filmSearch, onChangePage, totalNumberOfMovies, isModalOpen, handleOk, guestSessionID } =
-      this.props
+    const {
+      filmData,
+      loading,
+      filmSearch,
+      onChangePage,
+      totalNumberOfMovies,
+      isModalOpen,
+      handleOk,
+      guestSessionID,
+      currentSearchPage,
+    } = this.props
 
     return (
       <section className="search-page">
@@ -17,6 +26,7 @@ export default class SearchPage extends Component {
         <Pagination
           className="pages"
           defaultCurrent={1}
+          current={currentSearchPage}
           total={totalNumberOfMovies}
           showSizeChanger={false}
           onChange={onChangePage}
@@ -26,3 +36,5 @@ export default class SearchPage extends Component {
     )
   }
 }
+
+// ant-pagination-item-active

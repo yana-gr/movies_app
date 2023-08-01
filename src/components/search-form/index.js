@@ -11,7 +11,10 @@ export default class SearchForm extends Component {
   }
 
   filmSearchDebounced = debounce(() => {
-    this.props.filmSearch(this.state.label)
+    if (this.state.label !== '') this.props.filmSearch(this.state.label)
+    else {
+      this.props.filmSearch('return')
+    }
   }, 1000)
 
   onLabelChange = (e) => {
